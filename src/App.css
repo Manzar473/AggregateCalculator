@@ -5,15 +5,17 @@
   flex-direction: column;
   padding: 10px;
 }
+.inputContainer{
+  margin-top: 12px;
+}
 .AppContainer{
   background-color: white;
   width: 387px;
   padding: 34px 0;
-  height: 470px;
+  height: 492px;
   border-radius: 10px;
   box-shadow: 5px 0px 22px;
   margin-bottom: 118px;
-
 }
 .textInput{
   margin-bottom: 20px ;
@@ -21,8 +23,8 @@
 }
 .aggregate{
   font-size: 30px;
-  color: #0dbaa3;
-  margin-top: 21px;
+  color: #0DBAA3;
+  margin-top: 9px;
 }
 .btn{
   width: 117px;
@@ -30,7 +32,7 @@
     border-radius: 5px;
     outline: none;
     border: none;
-    background-color: #0dbaa3;
+    background-color: #0DBAA3;
     color: white;
     font-size: 14px;
     font-weight: 600;
@@ -53,7 +55,6 @@
     font-weight: 600;
     color: gray;
     margin: 0;
-    margin-top: 13px;
 }
 .App{
   background-image: url("backgroundthree.jpg");
@@ -69,15 +70,17 @@ justify-content: center;
     color: gray;
     margin: 0;
     font-size: 20px;
+    text-align: center;
 }
 .Subtitle{
   font-weight: 500;
     font-size: 15px;
     color: gray;
-    margin-bottom: 26px;
+    margin-bottom: 13px;
+    text-align: center;
 }
 .span{
-  color: #0dbaa3;
+  color: #0DBAA3;
 }
 .css-1wnsr1i {
   border-radius: 15px !important;
@@ -91,17 +94,40 @@ justify-content: center;
   position: absolute;
   top: -12px;
   left: 15px;
-  color: #0dbaa3;
+  color: #0DBAA3;
   cursor: pointer;
 }
-
 #modal-modal-title{
-  color: #0dbaa3 !important;
+  color: #0DBAA3 !important;
   font-weight: 600 !important;
 }
-
+.TabsContainer{
+  display: flex;
+}
+.ActiveTab{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+width: 50%;
+background-color:#0dbaa3 ;
+color: white;
+font-weight: 500;
+cursor: pointer;
+}
+.inActiveTab{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  font-weight: 500;
+  color: gray;
+  cursor: pointer;
+}
+.TabsContainer{
+  background-color: rgb(231, 229, 229);
+  height: 40px;
+}
 @media (max-width:576px) {
-  
   .App{
     background-color: white;
     background-image: url("backgroundFour.jpg");
@@ -111,16 +137,11 @@ justify-content: center;
     height: 100%; */
   }
   .AppContainer{
-
     box-shadow: none;
     width: 320px;
     margin-bottom: 96px;
   }
-
   .css-1wnsr1i {
     width: 300px !important;
-  
   }
-
- 
 }

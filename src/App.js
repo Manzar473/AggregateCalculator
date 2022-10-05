@@ -22,21 +22,24 @@ const style = {
 
 
 function App() {
-  const [matric, setMatric] = useState(0)
-  const [Fsc, setFsc] = useState(0)
-  const [Mdcat, setMdcat] = useState(0)
+  const [matric, setMatric] = useState('')
+  const [Fsc, setFsc] = useState('')
+  const [Mdcat, setMdcat] = useState('')
   const [aggregate, setaggregate] = useState(0)
   const [isDisable, setisDisable] = useState(true)
-
+  const [mdcatOn, setMdcatOn] = useState(true)
+  const [NumsOn, setNumsOn] = useState(false)
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const calculation = () => {
-
-    setaggregate(((matric / 1100) * 10) + ((Fsc / 1100) * 40) + ((Mdcat / 200) * 50))
+    if (mdcatOn) {
+      setaggregate(((matric / 1100) * 10) + ((Fsc / 1100) * 40) + ((Mdcat / 200) * 50))
+    }
+    else {
+      setaggregate(((matric / 200) * 25) + ((Fsc / 1100) * 25) + ((Mdcat / 200) * 50))
+    }
   }
-
   useEffect(() => {
     if (matric > 0 && Fsc > 0 && Mdcat > 0) {
       setisDisable(false)
@@ -45,40 +48,56 @@ function App() {
       setisDisable(true)
     }
   }, [matric, Fsc, Mdcat])
-
   useEffect(() => {
     if (matric > 1100 || Fsc > 1100 || Mdcat > 200 || matric < 0 || Fsc < 0 || Mdcat < 0) {
       setisDisable(true)
     }
   }, [matric, Fsc, Mdcat])
-
-
+  const switchToMdcat = () => {
+    setMatric('')
+    setFsc('')
+    setMdcat('')
+    setaggregate(0)
+    setMdcatOn(true)
+  }
+  const switchToNums = () => {
+    setMatric('')
+    setFsc('')
+    setMdcat('')
+    setaggregate(0)
+    setMdcatOn(false)
+  }
   return (
     <div className="App">
       <div className='AppContainer'>
         <div className='iconContainer'>
           <InfoIcon className='icon' onClick={handleOpen} />
-
+        </div>
+        <p className='Title'>Calculate your Aggregate</p>
+        <p className='Subtitle'>Developed By <span className='span'>Manzar Abbas</span></p>
+        <div className='TabsContainer'>
+          <div className={mdcatOn ? 'ActiveTab' : 'inActiveTab'} onClick={switchToMdcat} >MDCAT</div>
+          <div className={mdcatOn ? 'inActiveTab' : 'ActiveTab'} onClick={switchToNums} >NUMS</div>
         </div>
         <div className='inputContainer'>
-          <p className='Title'>Calculate your Aggregate</p>
-          <p className='Subtitle'>Developed By <span className='span'>Manzar Abbas</span></p>
           <div className="textInput">
             <TextField
+              value={matric}
               className="textInput"
-              label="MATRIC"
+              label={mdcatOn ? "MATRIC" : "NUMS"}
               type="number"
               onChange={e => setMatric(e.target.value)}
               required
-              error={(matric > 1100 || matric < 0) ? true : false}
-              helperText={(matric > 1100 || matric < 0) ? "Aby Harami! sae sae Bta " : ""}
+              error={mdcatOn ? ((matric > 1100 || matric < 0) ? true : false) : ((matric > 200 || matric < 0) ? true : false)}
+              helperText={mdcatOn ? ((matric > 1100 || matric < 0) ? "Aby Harami! sae sae Bta " : "") : ((matric > 200 || matric < 0) ? "Aby Harami! sae sae Bta " : "")}
               InputProps={{
-                endAdornment: <InputAdornment position="end">/1100</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{mdcatOn ? '/1100' : '/200'}</InputAdornment>,
               }}
             />
           </div>
           <div className="textInput">
             <TextField
+              value={Fsc}
               className="textInput"
               label="FSC"
               type="number"
@@ -93,12 +112,13 @@ function App() {
           </div>
           <div className="textInput">
             <TextField
+              value={Mdcat}
               className="textInput"
               label="MDCAT"
               type="number"
               onChange={e => setMdcat(e.target.value)}
               required
-              helperText={(Mdcat > 200 || Fsc < 0) ? "Aby Harami! sae sae Bta" : ""}
+              helperText={(Mdcat > 200 || Mdcat < 0) ? "Aby Harami! sae sae Bta" : ""}
               error={(Mdcat > 200 || Mdcat < 0) ? true : false}
               InputProps={{
                 endAdornment: <InputAdornment position="end">/200</InputAdornment>,
@@ -108,12 +128,11 @@ function App() {
           <div className='CalBtn'>
             <button
               className={isDisable ? "btnDisble" : "btn"}
-              onClick={calculation}
               disabled={isDisable}
+              onClick={calculation}
             >Calculate</button>
           </div>
         </div>
-
         {aggregate > 0 &&
           <div className='result'>
             <p className='aggHeading'>Your Aggregte is</p>
@@ -131,19 +150,21 @@ function App() {
             Aggregate criteria
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <div>
-              <p>
-                This calculation is based on following weightage : <br />
-                Matric 10% <br />
-                FSC 40% <br />
-                Mdcat 50%
-              </p>
-            </div>
+            {mdcatOn ? <p>
+              This calculation is based on following weightage : <br />
+              Matric 10% <br />
+              FSC 40% <br />
+              Mdcat 50%
+            </p> : <p>
+              This calculation is based on following weightage : <br />
+              Nums 25% <br />
+              FSC 25% <br />
+              Mdcat 50%
+            </p>}
           </Typography>
         </Box>
       </Modal>
     </div>
   );
 }
-
 export default App;
