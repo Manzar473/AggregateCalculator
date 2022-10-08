@@ -32,14 +32,19 @@ function App() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const calculation = () => {
+
+
     if (mdcatOn) {
       setaggregate(((matric / 1100) * 10) + ((Fsc / 1100) * 40) + ((Mdcat / 200) * 50))
     }
     else {
-      setaggregate(((matric / 200) * 25) + ((Fsc / 1100) * 25) + ((Mdcat / 200) * 50))
+      setaggregate(((matric / 1100) * 10) + ((Fsc / 1100) * 40) + ((Mdcat / 150) * 50))
     }
   }
+
+
   useEffect(() => {
     if (matric > 0 && Fsc > 0 && Mdcat > 0) {
       setisDisable(false)
@@ -48,11 +53,16 @@ function App() {
       setisDisable(true)
     }
   }, [matric, Fsc, Mdcat])
+
+
   useEffect(() => {
     if (matric > 1100 || Fsc > 1100 || Mdcat > 200 || matric < 0 || Fsc < 0 || Mdcat < 0) {
       setisDisable(true)
     }
   }, [matric, Fsc, Mdcat])
+
+
+
   const switchToMdcat = () => {
     setMatric('')
     setFsc('')
@@ -84,14 +94,14 @@ function App() {
             <TextField
               value={matric}
               className="textInput"
-              label={mdcatOn ? "MATRIC" : "NUMS"}
+              label="MATRIC"
               type="number"
               onChange={e => setMatric(e.target.value)}
               required
-              error={mdcatOn ? ((matric > 1100 || matric < 0) ? true : false) : ((matric > 200 || matric < 0) ? true : false)}
-              helperText={mdcatOn ? ((matric > 1100 || matric < 0) ? "Aby Harami! sae sae Bta " : "") : ((matric > 200 || matric < 0) ? "Aby Harami! sae sae Bta " : "")}
+              error={(matric > 1100 || matric < 0) ? true : false}
+              helperText={(matric > 1100 || matric < 0) ? "Aby Harami! sae sae Bta " : ""}
               InputProps={{
-                endAdornment: <InputAdornment position="end">{mdcatOn ? '/1100' : '/200'}</InputAdornment>,
+                endAdornment: <InputAdornment position="end">/1100</InputAdornment>,
               }}
             />
           </div>
@@ -114,14 +124,14 @@ function App() {
             <TextField
               value={Mdcat}
               className="textInput"
-              label="MDCAT"
+              label={mdcatOn ? "MDCAT" : "NUMS"}
               type="number"
               onChange={e => setMdcat(e.target.value)}
               required
-              helperText={(Mdcat > 200 || Mdcat < 0) ? "Aby Harami! sae sae Bta" : ""}
-              error={(Mdcat > 200 || Mdcat < 0) ? true : false}
+              helperText={mdcatOn ? ((Mdcat > 200 || Mdcat < 0) ? "Aby Harami! sae sae Bta" : "") : ((Mdcat > 150 || Mdcat < 0) ? "Aby Harami! sae sae Bta" : "")}
+              error={mdcatOn ? ((Mdcat > 200 || Mdcat < 0) ? true : false) : ((Mdcat > 150 || Mdcat < 0) ? true : false)}
               InputProps={{
-                endAdornment: <InputAdornment position="end">/200</InputAdornment>,
+                endAdornment: <InputAdornment position="end">{mdcatOn ? "/200" : "/150"}</InputAdornment>,
               }}
             />
           </div>
@@ -157,9 +167,9 @@ function App() {
               Mdcat 50%
             </p> : <p>
               This calculation is based on following weightage : <br />
-              Nums 25% <br />
-              FSC 25% <br />
-              Mdcat 50%
+              Matric 10% <br />
+              FSC 40% <br />
+              Nums 50%
             </p>}
           </Typography>
         </Box>
@@ -167,4 +177,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
